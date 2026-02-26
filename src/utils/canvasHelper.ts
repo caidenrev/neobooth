@@ -34,9 +34,12 @@ export const mergeImageWithFrame = async (photosBase64: string[], framePath: str
         // Angka ini adalah perkiraan dari desain frame kamu. Nanti kamu bisa ubah-ubah angkanya
         // kalau posisi fotonya kurang pas (kurang atas/bawah/lebar).
         const slots = [
-            { x: 140, y: 250, w: 960, h: 960 },   // Kotak Atas
-            { x: 140, y: 1300, w: 960, h: 960 },  // Kotak Tengah
-            { x: 140, y: 2350, w: 960, h: 960 },  // Kotak Bawah
+            // Kita perlebar kotak (w & h) dan geser agak ke atas (y) dan kiri (x)
+            // agar area foto "tumpah" (bleed) ke belakang frame dan tidak menyisakan ruang putih.
+            // Frame PNG akan menutupi pinggirannya sehingga terlihat pas!
+            { x: 90, y: 160, w: 1060, h: 1000 },   // Kotak Atas
+            { x: 90, y: 1190, w: 1060, h: 1000 },  // Kotak Tengah
+            { x: 90, y: 2220, w: 1060, h: 1000 },  // Kotak Bawah
         ];
 
         // Gambar ketiga foto ke masing-masing kotak
