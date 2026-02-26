@@ -34,14 +34,9 @@ export const mergeImageWithFrame = async (photosBase64: string[], framePath: str
         // Angka ini adalah perkiraan dari desain frame kamu. Nanti kamu bisa ubah-ubah angkanya
         // kalau posisi fotonya kurang pas (kurang atas/bawah/lebar).
         const slots = [
-            // Kotak 1 (Atas) - Agak turun sedikit karena ada hiasan bunga/pelangi di atas
-            { x: 120, y: 350, w: 1000, h: 900 },
-
-            // Kotak 2 (Tengah)
-            { x: 120, y: 1380, w: 1000, h: 900 },
-
-            // Kotak 3 (Bawah) - Di atas tulisan "Snap Booth"
-            { x: 120, y: 2400, w: 1000, h: 900 },
+            { x: 140, y: 250, w: 960, h: 960 },   // Kotak Atas
+            { x: 140, y: 1300, w: 960, h: 960 },  // Kotak Tengah
+            { x: 140, y: 2350, w: 960, h: 960 },  // Kotak Bawah
         ];
 
         // Gambar ketiga foto ke masing-masing kotak
