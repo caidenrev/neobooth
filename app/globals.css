@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background netral agar warna Neobrutalism menonjol */
+  --background: #F4F4F0;
+  /* Teks hitam pekat untuk kontras maksimal */
+  --foreground: #000000;
+
+  /* Palette Warna Neobrutalism */
+  --neo-navy: #000080;
+  --neo-yellow: #FFD700;
+  --neo-red: #FF0000;
+  --neo-green: #00FF00;
 }
+
+/* Sengaja kita hapus @media (prefers-color-scheme: dark) 
+   agar tema Neobrutalism tetap konsisten terang & kontras tinggi */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Mendaftarkan warna Neobrutalism ke Tailwind */
+  --color-neo-navy: var(--neo-navy);
+  --color-neo-yellow: var(--neo-yellow);
+  --color-neo-red: var(--neo-red);
+  --color-neo-green: var(--neo-green);
+
+  /* Hard shadows khas Neobrutalism */
+  --shadow-neo: 8px 8px 0px 0px #000000;
+  --shadow-neo-sm: 4px 4px 0px 0px #000000;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Fallback ke font sans-serif tebal jika Geist tidak load */
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* =========================================
+   PENGATURAN PRINT KHUSUS PHOTOBOOTH
+========================================= */
+@media print {
+  @page {
+    /* Menghilangkan margin default browser agar ukuran frame 10.5 x 29.7 cm akurat */
+    margin: 0;
+  }
+
+  body {
+    background-color: white !important;
+    /* Memaksa browser mencetak warna background (jika ada elemen berwarna) */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Utility class untuk menyembunyikan tombol/UI saat print */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Utility class untuk elemen yang HANYA muncul saat di-print (misal kanvas final) */
+  .print-only {
+    display: block !important;
+  }
 }
