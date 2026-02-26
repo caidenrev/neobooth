@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { Camera, RotateCcw, CheckCircle } from 'lucide-react';
 import BrutalistButton from './BrutalistButton';
+import AlertPopup from './AlertPopup';
 
 interface CameraViewProps {
     onCapture: (images: string[]) => void;
@@ -19,6 +20,9 @@ export default function CameraView({ onCapture }: CameraViewProps) {
     const [isCounting, setIsCounting] = useState(false);
     const [count, setCount] = useState(0);
     const [showFlash, setShowFlash] = useState(false);
+
+    // State untuk konfirmasi reset
+    const [showResetConfirm, setShowResetConfirm] = useState(false);
 
     const videoConstraints = { width: 1280, height: 960, facingMode: "user" };
 
@@ -53,11 +57,14 @@ export default function CameraView({ onCapture }: CameraViewProps) {
         setTempImages(prev => prev.slice(0, -1));
     };
 
-    // Fungsi untuk mereset semua foto dari awal
+    // Fungsi untuk mereset semua foto dari awal (sekarang lewat popup)
     const handleResetAll = () => {
-        if (confirm("Yakin mau ulang semua dari awal?")) {
-            setTempImages([]);
-        }
+        setShowResetConfirm(true);
+    };
+
+    const confirmReset = () => {
+        setTempImages([]);
+        setShowResetConfirm(false);
     };
 
     // Fungsi untuk lanjut ke tahap penggabungan dengan frame
@@ -66,7 +73,7 @@ export default function CameraView({ onCapture }: CameraViewProps) {
     };
 
     return (
-        <div className="relative w-full max-w-2xl border-4 border-black shadow-[12px_12px_0px_0px_#000000] bg-[var(--neo-navy)] flex flex-col items-center group">
+        <div className="relative w-full max-w-2xl border-4 border-black shadow-[12px_12px_0px_0px_#000000] rounded-2xl bg-[var(--neo-navy)] flex flex-col items-center group overflow-hidden">
 
             {/* Efek Kilatan Flash */}
             {showFlash && <div className="absolute inset-0 z-50 bg-white" />}
@@ -77,14 +84,14 @@ export default function CameraView({ onCapture }: CameraViewProps) {
                     <div className="bg-[var(--neo-yellow)] px-4 py-2 border-4 border-black font-bold uppercase text-2xl mb-8 transform -rotate-2">
                         Mengambil Foto {tempImages.length + 1}
                     </div>
-                    <span className="text-[150px] font-black text-white drop-shadow-[8px_8px_0px_#000000] animate-bounce">
-                        {count > 0 ? count : '📸'}
+                    <span className="text-[120px] md:text-[150px] font-black text-white drop-shadow-[8px_8px_0px_#000000] animate-bounce flex items-center justify-center mt-4">
+                        {count > 0 ? count : <Camera size={120} strokeWidth={3} className="text-white" />}
                     </span>
                 </div>
             )}
 
             {/* Area Kamera Web */}
-            <div className="w-full relative aspect-[4/3] bg-black border-b-4 border-black">
+            <div className="w-full relative aspect-[4/3] bg-black border-b-4 border-black overflow-hidden">
                 <Webcam
                     audio={false}
                     ref={webcamRef}
@@ -101,7 +108,7 @@ export default function CameraView({ onCapture }: CameraViewProps) {
                 {/* Indikator 3 Kotak Foto */}
                 <div className="flex gap-4 h-20 w-full justify-center">
                     {[0, 1, 2].map((idx) => (
-                        <div key={idx} className="w-20 h-20 border-4 border-black bg-gray-300 flex items-center justify-center overflow-hidden shadow-[4px_4px_0px_0px_#000000]">
+                        <div key={idx} className="w-20 h-20 border-4 border-black rounded-xl bg-gray-300 flex items-center justify-center overflow-hidden shadow-[4px_4px_0px_0px_#000000]">
                             {tempImages[idx] ? (
                                 <img src={tempImages[idx]} className="w-full h-full object-cover" alt={`shot-${idx}`} />
                             ) : (
@@ -139,8 +146,8 @@ export default function CameraView({ onCapture }: CameraViewProps) {
                         </>
                     ) : (
                         // STATE AWAL (Belum ada foto)
-                        <BrutalistButton variant="yellow" onClick={takeSinglePhoto} className="flex items-center gap-3 text-2xl px-12 py-4">
-                            <Camera size={32} /> MULAI FOTO 1
+                        <BrutalistButton variant="yellow" onClick={takeSinglePhoto} className="flex items-center gap-3 text-lg md:text-2xl px-6 md:px-12 py-3 md:py-4">
+                            <Camera size={24} className="md:w-8 md:h-8" /> MULAI FOTO 1
                         </BrutalistButton>
                     )}
                 </div>
@@ -153,6 +160,18 @@ export default function CameraView({ onCapture }: CameraViewProps) {
                 )}
 
             </div>
+
+            {/* Popup Konfirmasi Reset */}
+            <AlertPopup
+                isOpen={showResetConfirm}
+                title="Yakin Ulangi?"
+                message="Semua foto yang udah kamu ambil bakal hilang lho. Beneran mau ulang dari awal?"
+                type="warning"
+                confirmText="Ya, Ulangi!"
+                cancelText="Mending Lanjut"
+                onConfirm={confirmReset}
+                onCancel={() => setShowResetConfirm(false)}
+            />
         </div>
     );
 }

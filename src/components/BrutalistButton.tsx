@@ -25,7 +25,7 @@ export default function BrutalistButton({
         <button
             className={`
         /* Base styles: Border tebal, font bold, uppercase */
-        font-bold py-3 px-8 border-4 border-black uppercase tracking-wider text-lg
+        font-bold py-2 px-4 md:py-3 md:px-8 border-4 border-black rounded-xl uppercase tracking-wider text-sm md:text-lg relative overflow-hidden group
         
         /* Transisi agar animasi klik terasa mulus tapi tetap kaku (snappy) */
         transition-all duration-150 ease-in-out
@@ -48,7 +48,11 @@ export default function BrutalistButton({
       `}
             {...props}
         >
-            {children}
+            {/* Efek Polkadot */}
+            <div className="absolute inset-0 bg-polkadot-thick opacity-40 pointer-events-none z-0 mix-blend-multiply"></div>
+
+            {/* Teks Konten */}
+            <span className="relative z-10">{children}</span>
         </button>
     );
 }

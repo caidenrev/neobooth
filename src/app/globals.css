@@ -11,6 +11,7 @@
   --neo-yellow: #FFD700;
   --neo-red: #FF0000;
   --neo-green: #00FF00;
+  --neo-pink: #FF90E8;
 }
 
 /* Sengaja kita hapus @media (prefers-color-scheme: dark) 
@@ -27,6 +28,7 @@
   --color-neo-yellow: var(--neo-yellow);
   --color-neo-red: var(--neo-red);
   --color-neo-green: var(--neo-green);
+  --color-neo-pink: var(--neo-pink);
 
   /* Hard shadows khas Neobrutalism */
   --shadow-neo: 8px 8px 0px 0px #000000;
@@ -65,4 +67,20 @@ body {
   .print-only {
     display: block !important;
   }
+}
+
+/* =========================================
+   EFEK POLKADOT (Tanpa Gradient)
+========================================= */
+.bg-polkadot {
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='3' fill='%23000000' fill-opacity='0.15'/%3E%3C/svg%3E");
+  background-size: 20px 20px;
+}
+
+.bg-polkadot-thick {
+  background-color: transparent;
+  /* r=5 dan opacity 0.5 untuk titik yang lebih tebal dan sangat jelas di latar pink */
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='5' cy='5' r='5' fill='%23000000' fill-opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 32px 32px;
 }
