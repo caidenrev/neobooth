@@ -73,7 +73,7 @@ export default function CameraView({ onCapture }: CameraViewProps) {
     };
 
     return (
-        <div className="relative w-full max-w-2xl border-4 border-black shadow-[12px_12px_0px_0px_#000000] rounded-2xl bg-[var(--neo-navy)] flex flex-col items-center group overflow-hidden">
+        <div className="relative w-full max-w-sm sm:max-w-lg md:max-w-2xl border-4 border-black shadow-[12px_12px_0px_0px_#000000] rounded-2xl bg-[var(--neo-navy)] flex flex-col items-center group overflow-hidden">
 
             {/* Efek Kilatan Flash */}
             {showFlash && <div className="absolute inset-0 z-50 bg-white" />}
@@ -103,16 +103,16 @@ export default function CameraView({ onCapture }: CameraViewProps) {
             </div>
 
             {/* Panel Kontrol Bawah */}
-            <div className="w-full p-6 flex flex-col items-center bg-[var(--neo-bg)] gap-6">
+            <div className="w-full p-3 sm:p-4 md:p-6 flex flex-col items-center bg-[var(--neo-bg)] gap-3 sm:gap-4 md:gap-6">
 
                 {/* Indikator 3 Kotak Foto */}
-                <div className="flex gap-4 h-20 w-full justify-center">
+                <div className="flex gap-2 sm:gap-3 md:gap-4 w-full justify-center">
                     {[0, 1, 2].map((idx) => (
-                        <div key={idx} className="w-20 h-20 border-4 border-black rounded-xl bg-gray-300 flex items-center justify-center overflow-hidden shadow-[4px_4px_0px_0px_#000000]">
+                        <div key={idx} className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 border-4 border-black rounded-xl bg-gray-300 flex items-center justify-center overflow-hidden shadow-[4px_4px_0px_0px_#000000]">
                             {tempImages[idx] ? (
                                 <img src={tempImages[idx]} className="w-full h-full object-cover" alt={`shot-${idx}`} />
                             ) : (
-                                <span className="text-gray-500 font-bold text-xl">{idx + 1}</span>
+                                <span className="text-gray-500 font-bold text-lg md:text-xl">{idx + 1}</span>
                             )}
                         </div>
                     ))}

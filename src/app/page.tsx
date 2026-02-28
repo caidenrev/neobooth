@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import CameraView from "@/src/components/CameraView";
 import PreviewCetak from "@/src/components/PreviewCetak";
-import { Star, Zap, Sparkles, Hexagon, Asterisk } from 'lucide-react';
 
 export default function Home() {
   // State sekarang menyimpan ARRAY of strings (karena ada 3 foto)
@@ -25,28 +25,54 @@ export default function Home() {
       {/* Background Latar Polkadot Tebal */}
       <div className="absolute inset-0 bg-polkadot-thick pointer-events-none opacity-40 z-0"></div>
 
-      {/* Dekorasi Background Neobrutalism dengan Ikon Acak */}
-      <div className="absolute top-10 left-10 w-24 h-24 bg-[var(--neo-yellow)] border-4 border-black shadow-[8px_8px_0px_0px_#000000] rounded-full flex items-center justify-center -z-10 no-print animate-pulse">
-        <Star size={48} className="text-black fill-black" strokeWidth={2} />
+      {/* Dekorasi PNG - Tersebar di seluruh layar, terlihat di semua ukuran */}
+
+      {/* Kiri Atas */}
+      <div className="absolute top-4 left-2 sm:top-8 sm:left-6 md:top-10 md:left-10 pointer-events-none no-print -z-10">
+        <Image src="/images/decoration-1.png" alt="" width={100} height={100}
+          className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[120px] md:h-[120px] object-contain" />
       </div>
-      <div className="absolute bottom-10 right-10 w-32 h-32 bg-[var(--neo-green)] border-4 border-black shadow-[8px_8px_0px_0px_#000000] rounded-2xl flex items-center justify-center -z-10 no-print transform rotate-12">
-        <Hexagon size={64} className="text-black" strokeWidth={3} />
+
+      {/* Kanan Atas */}
+      <div className="absolute top-4 right-2 sm:top-8 sm:right-6 md:top-10 md:right-10 pointer-events-none no-print -z-10 transform rotate-12">
+        <Image src="/images/decoration-3.png" alt="" width={110} height={110}
+          className="w-[100px] h-[100px] sm:w-[85px] sm:h-[85px] md:w-[110px] md:h-[110px] object-contain" />
       </div>
-      <div className="absolute top-1/2 left-4 w-16 h-16 bg-[var(--neo-red)] border-4 border-black shadow-[8px_8px_0px_0px_#000000] rounded-xl flex items-center justify-center -z-10 no-print transform -rotate-12">
-        <Zap size={32} className="text-white fill-white" strokeWidth={2} />
+
+      {/* Tengah Kiri */}
+      <div className="absolute top-1/2 -translate-y-1/2 left-1 sm:left-3 md:left-6 pointer-events-none no-print -z-10 transform -rotate-6">
+        <Image src="/images/decoration-2.png" alt="" width={90} height={90}
+          className="w-[90px] h-[90px] sm:w-[75px] sm:h-[75px] md:w-[90px] md:h-[90px] object-contain" />
       </div>
-      <div className="absolute top-20 right-20 w-20 h-20 bg-[var(--neo-navy)] border-4 border-black shadow-[8px_8px_0px_0px_#000000] rounded-xl flex items-center justify-center -z-10 no-print transform rotate-45">
-        <Sparkles size={40} className="text-white" strokeWidth={2} />
+
+      {/* Tengah Kanan */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-1 sm:right-3 md:right-6 pointer-events-none no-print -z-10 transform rotate-6">
+        <Image src="/images/decoration-4.png" alt="" width={90} height={90}
+          className="w-[90px] h-[90px] sm:w-[75px] sm:h-[75px] md:w-[90px] md:h-[90px] object-contain" />
       </div>
-      <div className="absolute bottom-20 left-32 w-12 h-12 bg-white border-4 border-black shadow-[4px_4px_0px_0px_#000000] rounded-full flex items-center justify-center -z-10 no-print transform -rotate-45">
-        <Asterisk size={24} className="text-black" strokeWidth={3} />
+
+      {/* Kiri Bawah */}
+      <div className="absolute bottom-4 left-2 sm:bottom-8 sm:left-6 md:bottom-10 md:left-10 pointer-events-none no-print -z-10 transform -rotate-12">
+        <Image src="/images/decoration-5.png" alt="" width={100} height={100}
+          className="w-[100px] h-[100px] sm:w-[85px] sm:h-[85px] md:w-[100px] md:h-[100px] object-contain" />
+      </div>
+
+      {/* Kanan Bawah */}
+      <div className="absolute bottom-4 right-2 sm:bottom-8 sm:right-6 md:bottom-10 md:right-10 pointer-events-none no-print -z-10 transform rotate-45">
+        <Image src="/images/decoration.png" alt="" width={110} height={110}
+          className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] object-contain" />
       </div>
 
       {/* Header Aplikasi */}
-      <div className="bg-[var(--neo-navy)] text-white border-4 border-black shadow-[8px_8px_0px_0px_#000000] rounded-2xl p-4 mb-8 transform -rotate-2 no-print hover:rotate-0 transition-transform cursor-default">
-        <h1 className="text-4xl md:text-6xl font-black uppercase tracking-widest text-center">
-          Neo Booth.
-        </h1>
+      <div className="relative z-10 mb-1 sm:mb-2 md:mb-3 no-print">
+        <Image
+          src="/images/logo-neobooth.png"
+          alt="Neo Booth Logo"
+          width={700}
+          height={220}
+          className="object-contain w-[380px] sm:w-[520px] md:w-[700px] h-auto"
+          priority
+        />
       </div>
 
       {/* Kontainer Utama */}
