@@ -83,9 +83,27 @@ export default function CameraView({ onCapture }: CameraViewProps) {
         }
         // Efek Flash — hanya jika diaktifkan
         if (flashEnabled) {
+            // Coba naikkan brightness ke max via Wake Lock + Screen Brightness API
+            let wakeLock: WakeLockSentinel | null = null;
+            try {
+                wakeLock = await navigator.wakeLock.request('screen');
+            } catch (_) { /* tidak didukung semua browser */ }
+
+            // Screen Brightness API (experimental, didukung di beberapa browser/PWA)
+            try {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const screen = window.screen as any;
+                if (screen.brightness !== undefined) {
+                    await screen.brightness.set(1.0); // max brightness
+                }
+            } catch (_) { /* tidak tersedia di browser ini */ }
+
             setShowFlash(true);
             await sleep(800);
             setShowFlash(false);
+
+            // Lepas wake lock setelah flash selesai
+            try { await wakeLock?.release(); } catch (_) { /* ignore */ }
         }
 
         setIsCounting(false);
