@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { Camera, RotateCcw, CheckCircle, Sparkles } from 'lucide-react';
+import { Camera, RotateCcw, CheckCircle, Sparkles, Zap } from 'lucide-react';
 import BrutalistButton from './BrutalistButton';
 import AlertPopup from './AlertPopup';
 
@@ -15,7 +15,7 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 // ─── Daftar Filter ────────────────────────────────────────────────────────────
 const FILTERS = [
     { id: 'normal', label: 'Normal', css: 'none' },
-    { id: 'beauty', label: 'Beauty', css: 'brightness(1.08) contrast(0.88) saturate(1.1) blur(0.5px)' },
+    { id: 'beauty', label: 'Beauty', css: 'brightness(1.15) contrast(0.78) saturate(1.2) hue-rotate(-8deg)' },
     { id: 'vivid', label: 'Vivid', css: 'saturate(1.9) contrast(1.1) brightness(1.05)' },
     { id: 'sepia', label: 'Sepia', css: 'sepia(0.75) contrast(1.05)' },
     { id: 'vintage', label: 'Vintage', css: 'sepia(0.4) contrast(0.9) brightness(1.1) saturate(0.9)' },
@@ -35,6 +35,7 @@ export default function CameraView({ onCapture }: CameraViewProps) {
     const [isCounting, setIsCounting] = useState(false);
     const [count, setCount] = useState(0);
     const [showFlash, setShowFlash] = useState(false);
+    const [flashEnabled, setFlashEnabled] = useState(true);
     const [showResetConfirm, setShowResetConfirm] = useState(false);
     const [selectedFilterId, setSelectedFilterId] = useState<FilterId>('normal');
 
@@ -80,10 +81,12 @@ export default function CameraView({ onCapture }: CameraViewProps) {
         if (img) {
             setTempImages(prev => [...prev, img]);
         }
-
-        setShowFlash(true);
-        await sleep(150);
-        setShowFlash(false);
+        // Efek Flash — hanya jika diaktifkan
+        if (flashEnabled) {
+            setShowFlash(true);
+            await sleep(800);
+            setShowFlash(false);
+        }
 
         setIsCounting(false);
     };
@@ -108,8 +111,8 @@ export default function CameraView({ onCapture }: CameraViewProps) {
     return (
         <div className="relative w-full max-w-sm sm:max-w-lg md:max-w-2xl border-4 border-black shadow-[12px_12px_0px_0px_#000000] rounded-2xl bg-[var(--neo-navy)] flex flex-col items-center group overflow-hidden">
 
-            {/* Efek Kilatan Flash */}
-            {showFlash && <div className="absolute inset-0 z-50 bg-white" />}
+            {/* Efek Flash — full screen putih sebagai fill light */}
+            {showFlash && <div className="fixed inset-0 z-[9999] bg-white pointer-events-none" />}
 
             {/* Overlay Hitung Mundur */}
             {isCounting && (
@@ -146,6 +149,19 @@ export default function CameraView({ onCapture }: CameraViewProps) {
                         {currentFilter.label}
                     </div>
                 )}
+
+                {/* Toggle Flash */}
+                <button
+                    onClick={() => setFlashEnabled(prev => !prev)}
+                    className={`absolute top-2 right-2 flex items-center gap-1 px-2 py-1 rounded-lg border-2 text-xs font-black uppercase transition-all
+                        ${flashEnabled
+                            ? 'bg-neo-yellow border-black text-black shadow-[2px_2px_0px_0px_#000000]'
+                            : 'bg-black/60 border-white/40 text-white/60 backdrop-blur-sm'
+                        }`}
+                >
+                    <Zap size={12} className={flashEnabled ? 'fill-black' : ''} />
+                    {flashEnabled ? 'Flash ON' : 'Flash OFF'}
+                </button>
             </div>
 
             {/* Panel Kontrol Bawah */}
